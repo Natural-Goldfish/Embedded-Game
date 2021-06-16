@@ -4,6 +4,7 @@ import time
 import random
 import os
 import sys
+import datetime
 from settings import *
 
 
@@ -52,12 +53,13 @@ class ObjectController:
         if my_object.team == 'enemy':
             if my_object.role == 'missile':
                 cls._enemy_missile_objects[object_id] = my_object
-            else :
+            elif my_object.role == 'fighter-plane' :
                 cls._enemy_objects[object_id] = my_object
+
         elif my_object.team == 'player':
             if my_object.role == 'missile':
                 cls._player_missile_objects[object_id] = my_object
-            else :
+            elif my_object.role == 'fighter-plane' :
                 cls._player_object[object_id] = my_object
 
     @classmethod
@@ -70,27 +72,43 @@ class ObjectController:
                     else : 
                         cls._enemy_missile_ids.add(new_id)
                         return new_id
-                else :
+                elif my_object.role == 'fighter-plane' :
                     if new_id in cls._enemy_ids : continue
                     else : 
                         cls._enemy_ids.add(new_id)
                         return new_id
+
             elif my_object.team == 'player' :
                 if my_object.role == 'missile' :
                     if new_id in cls._player_missile_ids : continue
                     else : 
                         cls._player_missile_ids.add(new_id)
                         return new_id
-                else :
+                elif my_object.role == 'fighter-plane' :
                     if new_id in cls._player_id : continue
                     else : 
                         cls._player_id.add(new_id)
                         return new_id
+
     # when objects moved, the objects must be renewed.
     @classmethod
     def renew(cls):
+        # Enemy attacks
+        for enemy_id in cls._enemy_ids:
+            enemy_object = cls._enemy_objects[enemy_id]
+            if datetime.datetime.now()- enemy_object.prev_attack_time >= enemy_object.attack_cycle:
+                enemy_object.attack()
+
+        # All objects move
+        for enemy_id in cls._enemy_ids:
+            enemy_object = cls._enemy_objects[enemy_id]
+            enemy_object.move()
+        for enemy_missile_id in cls._enemy_missile_ids:
+            enemy_missile_object = cls._enemy_missile_objects[enemy_missile_id]
+            enemy_missile_object.move()
+
         while True :
-            # When player is attacked by enemy's missiles
+            # When the player's airplane is attacked by enemy's missiles
             flag = True
             for player_id in cls._player_id :
                 player_object = cls._player_object[player_id]
@@ -184,14 +202,15 @@ class Background:
         return image
 
 
-class CustomObject:
-    def __init__(self, obj_coord, name, team, role):
-        self._team = team
-        self._role = role
+class GameObject:
+    def __init__(self, obj_coord, name, team):
         self._name = name
-        self._image = Image.open(OBJECT_INFO[self._name]['path']).resize(OBJECT_INFO[self._name]['size'])
+        self._team = team
+        self._role = OBJECT_INFO[self._name]['role']
+        self._speed = OBJECT_INFO[self._name]['speed']
         self._width = OBJECT_INFO[self._name]['width']
         self._height = OBJECT_INFO[self._name]['height']
+        self._image = Image.open(OBJECT_INFO[self._name]['path']).resize(OBJECT_INFO[self._name]['size'])
         self._obj_coord = obj_coord
         self._image_coord = self.image_coord
         ObjectController.enroll(self)
@@ -199,6 +218,7 @@ class CustomObject:
     @property
     def team(self):
         return self._team
+
     @property
     def role(self):
         return self._role
@@ -208,10 +228,12 @@ class CustomObject:
         return self._image
 
     @property
-    def image_coord(self):
-        self._image_coord = (self.obj_coord[0]-self._width//2, self.obj_coord[1]-self._height//2, 
-                            self.obj_coord[0]+self._width//2+1, self.obj_coord[1]+self._height//2+1)
-        return self._image_coord
+    def width(self):
+        return self._width
+
+    @property
+    def height(self):
+        return self._height
 
     @property
     def obj_coord(self):
@@ -221,50 +243,47 @@ class CustomObject:
     def obj_coord(self, new_coord):
         self._obj_coord = new_coord
 
+    @property
+    def speed(self):
+        return self._speed
 
+    @property
+    def image_coord(self):
+        self._image_coord = (self.obj_coord[0]-self.width//2, self.obj_coord[1]-self.height//2, 
+                            self.obj_coord[0]+self.width//2+1, self.obj_coord[1]+self.height//2+1)
+        return self._image_coord
 
-class Player(CustomObject):
-    def __init__(self, obj_coord, name='player1', team='player', role='player'):
-        super().__init__(obj_coord, name, team, role)
-        self._speed = OBJECT_INFO[name]['speed']
+    def move(self):
+        self._obj_coord = (self.obj_coord[0]+self.speed[0], self.obj_coord[1]+self.speed[1])
 
+class Player(GameObject):
+    def __init__(self, obj_coord, name='player1', team='player', role='fighter-plane'):
+        super().__init__(obj_coord, name, team)
     def attack(self):
-        pass
+        pass 
 
     def move(self, key):
         if key == 'L' :
-            self.obj_coord = (self.obj_coord[0]-self._speed, self.obj_coord[1])
+            self.obj_coord = (self.obj_coord[0]-self.speed[0], self.obj_coord[1])
         elif key == 'R' :
-            self.obj_coord = (self.obj_coord[0]+self._speed, self.obj_coord[1])
+            self.obj_coord = (self.obj_coord[0]+self.speed[0], self.obj_coord[1])
         elif key == 'U' :
-            self.obj_coord = (self.obj_coord[0], self.obj_coord[1]-self._speed)
+            self.obj_coord = (self.obj_coord[0], self.obj_coord[1]-self.speed[1])
         elif key == 'D' :
-            self.obj_coord = (self.obj_coord[0], self.obj_coord[1]+self._speed)      
+            self.obj_coord = (self.obj_coord[0], self.obj_coord[1]+self.speed[1])      
 
+class Enemy(GameObject):
+    def __init__(self, obj_coord, name='enemy1', team='enemy', role='fighter-plane'):
+        super().__init__(obj_coord, name, team)
+        self.prev_attack_time = datetime.datetime.now()
+        self.attack_cycle = OBJECT_INFO[name]['attack_cycle']
 
-class Missile(CustomObject):
-    def __init__(self, obj_coord, speed, name='missile1', team='enemy', role='missile'):
-        '''
-        obj_coord : (x_center, y_center)
-        speed : (dx, dy)
-        '''
-        super().__init__(obj_coord, name, team, role)
-        self._speed = speed
+    def attack(self):
+        missile_coord = (self.obj_coord[0], self.obj_coord[1] + self.height//2 + 5)
+        Missile(missile_coord)
+        self.prev_attack_time = datetime.datetime.now()
 
-    def move(self):
-        '''
-		calculate new coordinate
-        '''
-        self.obj_coord = (self.obj_coord[0]+self._speed[0], self.obj_coord[1]+self._speed[1])
-
-
-
-
-
-
-
-
-
-
-
+class Missile(GameObject):
+    def __init__(self, obj_coord, name='missile1', team='enemy', role='missile'):
+        super().__init__(obj_coord, name, team)
 
