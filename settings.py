@@ -22,10 +22,6 @@ DISPLAY = st7789.ST7789(
     baudrate=BAUDRATE,
 )
 
-SCREEN_WIDTH = DISPLAY.width
-SCREEN_HEIGHT = DISPLAY.height
-START_POINT = (SCREEN_WIDTH//2, 4*(SCREEN_HEIGHT//5))
-
 # Input pins:
 BUTTON_A = DigitalInOut(board.D5)
 BUTTON_A.direction = Direction.INPUT
@@ -33,28 +29,17 @@ BUTTON_A.direction = Direction.INPUT
 BUTTON_B = DigitalInOut(board.D6)
 BUTTON_B.direction = Direction.INPUT
 
-
 BUTTON_L = DigitalInOut(board.D27)
 BUTTON_L.direction = Direction.INPUT
-#BUTTON_L_CLICKED = False if BUTTON_L.value else True
-
-def L_CLICKED():
-    if BUTTON_L.value : return False
-    else : return True
-BUTTON_L_CLICKED = L_CLICKED()
-
 
 BUTTON_R = DigitalInOut(board.D23)
 BUTTON_R.direction = Direction.INPUT
 
-
 BUTTON_U = DigitalInOut(board.D17)
 BUTTON_U.direction = Direction.INPUT
 
-
 BUTTON_D = DigitalInOut(board.D22)
 BUTTON_D.direction = Direction.INPUT
-
 
 BUTTON_C = DigitalInOut(board.D4)
 BUTTON_C.direction = Direction.INPUT
@@ -64,10 +49,23 @@ BACKLIGHT = DigitalInOut(board.D26)
 BACKLIGHT.switch_to_output()
 BACKLIGHT.value = True
 
-#Image
+# Image
 IMAGE_PATH = 'images'
 IMAGE_NAME = '{}.png'
 
+SCREEN_WIDTH = DISPLAY.width
+SCREEN_HEIGHT = DISPLAY.height
+START_POINT = (SCREEN_WIDTH//2, 4*(SCREEN_HEIGHT//5))
+
+BACKGROUND_INFO = {
+    'background' : {
+        'path' : 'images/background.png',
+        'width' : 240,
+        'height' : 240
+    }
+}
+
+# Game object information
 OBJECT_INFO = {
     'missile1' : {
             'width' : 13,
@@ -75,6 +73,15 @@ OBJECT_INFO = {
             'size' : (13, 13),
             'path' : 'images/missile1.png',
             'speed' : (0, 2),
+            'role' : 'missile',
+         
+    },
+    'missile2' : {
+            'width' : 13,
+            'height' : 13,
+            'size' : (13, 13),
+            'path' : 'images/missile2.png',
+            'speed' : (0, -5),
             'role' : 'missile',
          
     },
@@ -91,7 +98,7 @@ OBJECT_INFO = {
                 'height' : 31,
                 'size' : (31, 31),
                 'path' : 'images/enemy1.png',
-                'speed' : (1, 0),
+                'speed' : (1, 1),
                 'role' : 'fighter-plane',
                 'attack_cycle' : datetime.timedelta(0, 3),
                 'missile_speed' : (0, 10)

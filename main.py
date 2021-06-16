@@ -2,26 +2,17 @@ from settings import *
 from game2 import *
 import datetime
 import time
-'''
-BUTTON_L_CLICKED = False if BUTTON_L.value else True
-BUTTON_R_CLICKED = False if BUTTON_R.value else True
-BUTTON_U_CLICKED = False if BUTTON_U.value else True
-BUTTON_D_CLICKED = False if BUTTON_D.value else True
 
-
-def main():
-    enemy = Missile((150, 50), (0, 1))
-
-    for time in range(50):
-        image_background = Image.open(os.path.join(IMAGE_PATH, IMAGE_NAME.format('background'))).resize((SCREEN_WIDTH, SCREEN_HEIGHT))
-        enemy.move()
-        DISPLAY.image(image_background)
-'''
 
 import datetime
+'''
+image = Image.open('images/background-new2.png') 
+image = image.convert('RGBA')
+cropped_image = image.resize((SCREEN_WIDTH, SCREEN_HEIGHT))
+cropped_image.save('images/background-new.png')
+'''
 
- 
-print(datetime.timedelta(0, 5))
+
 
 def main():
     background = Background()
@@ -43,7 +34,9 @@ def main():
             player.move('U')
         elif button.down :
             player.move('D')
-
+        
+        if button.a :
+            player.shoot()
         DISPLAY.image(background())     
 
 main()
