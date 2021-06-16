@@ -1,6 +1,7 @@
 from settings import *
 from game2 import *
-
+import datetime
+import time
 '''
 BUTTON_L_CLICKED = False if BUTTON_L.value else True
 BUTTON_R_CLICKED = False if BUTTON_R.value else True
@@ -16,16 +17,23 @@ def main():
         enemy.move()
         DISPLAY.image(image_background)
 '''
+
+import datetime
+
+ 
+print(datetime.timedelta(0, 5))
+
 def main():
     background = Background()
     button = Button()
 
     player = Player(START_POINT)
-    enemy = Missile((150, 50), (0, 3))
+    missile = Missile((150, 50))
+    enemy = Enemy((100, 1))
+    enemy2 = Enemy((200, 10), 'enemy2')
+    start = datetime.datetime.now()
 
-    while True:
-	
-        enemy.move()
+    while True:	
 
         if button.left : 
             player.move('L')
@@ -35,10 +43,7 @@ def main():
             player.move('U')
         elif button.down :
             player.move('D')
+
         DISPLAY.image(background())     
-
-    for time in range(50):
-        enemy.move()
-
 
 main()
