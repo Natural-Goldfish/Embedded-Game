@@ -49,68 +49,8 @@ BACKLIGHT = DigitalInOut(board.D26)
 BACKLIGHT.switch_to_output()
 BACKLIGHT.value = True
 
-# Image
-IMAGE_PATH = 'images'
-IMAGE_NAME = '{}.png'
-
 SCREEN_WIDTH = DISPLAY.width
 SCREEN_HEIGHT = DISPLAY.height
 START_POINT = (SCREEN_WIDTH//2, 4*(SCREEN_HEIGHT//5))
 
-BACKGROUND_INFO = {
-    'background' : {
-        'path' : 'images/background.png',
-        'width' : 240,
-        'height' : 240
-    }
-}
-
-# Game object information
-OBJECT_INFO = {
-    'missile1' : {
-            'width' : 13,
-            'height' : 13,
-            'size' : (13, 13),
-            'path' : 'images/missile1.png',
-            'speed' : (0, 2),
-            'role' : 'missile',
-         
-    },
-    'missile2' : {
-            'width' : 13,
-            'height' : 13,
-            'size' : (13, 13),
-            'path' : 'images/missile2.png',
-            'speed' : (0, -5),
-            'role' : 'missile',
-         
-    },
-    'player1' : {
-                'width' : 25,
-                'height' : 25,
-                'size' : (25, 25),
-                'path' : 'images/player1.png',
-                'speed' : (5, 5),
-                'role' : 'fighter-plane'
-    },
-    'enemy1' : {
-                'width' : 31,
-                'height' : 31,
-                'size' : (31, 31),
-                'path' : 'images/enemy1.png',
-                'speed' : (1, 1),
-                'role' : 'fighter-plane',
-                'attack_cycle' : datetime.timedelta(0, 3),
-                'missile_speed' : (0, 10)
-    },
-    'enemy2' : {
-                'width' : 31,
-                'height' : 31,
-                'size' : (31, 31),
-                'path' : 'images/enemy2.png',
-                'speed' : (-1, 0),
-                'role' : 'fighter-plane',
-                'attack_cycle' : datetime.timedelta(0, 4),
-                'missile_speed' : (0, 15)
-    }
-}
+IMAGE_PATH = 'images'
