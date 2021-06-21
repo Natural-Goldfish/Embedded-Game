@@ -11,7 +11,7 @@ OBJECT_INFO = {
         'width' : 61,
         'height' : 61,
         'size' : (61, 61),
-        'path' : os.path.join(IMAGE_PATH, 'effect-boom2.png'),
+        'path' : os.path.join(IMAGE_PATH, 'effect-boom1.png'),
         'speed' : (0, 0),
         'team' : 'none',
         'role' : 'effect',
