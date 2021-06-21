@@ -12,16 +12,34 @@ class GameStarter:
 
     def __init_game_objects(self):
         if self.__level == 1 :
-            self.__respone_cycle = datetime.timedelta(0, 3)
+            self.__respawn_cycle = datetime.timedelta(0, 3)
             self.__enemy_name = 'enemy1'
             self.__victory_condition = 10
+            self.__enemy_limit = 3
 
         elif self.__level == 2 :
-            self.__enemy_numbers = 20
-            self.__init_enemy_num = 5
+            self.__respawn_cycle = datetime.timedelta(0, 3)
+            self.__enemy_name = 'enemy2'
+            self.__victory_condition = 15
+            self.__enemy_limit = 5
 
-        for _ in range(self.__init_enemy_num) :
-            Enemy((random.randint(1, SCREEN_WIDTH-1), 1))
+        elif self.__level == 3 :
+            self.__respawn_cycle = datetime.timedelta(0, 3)
+            self.__enemy_name = 'enemy3'
+            self.__victory_condition = 20
+            self.__enemy_limit = 7
+
+        elif self.__level == 4 :
+            self.__respawn_cycle = datetime.timedelta(0, 3)
+            self.__enemy_name = 'enemy4'
+            self.__victory_condition = 25
+            self.__enemy_limit = 7
+
+        elif self.__level == 5 :
+            self.__respawn_cycle = datetime.timedelta(0, 3)
+            self.__enemy_name = 'enemy5'
+            self.__victory_condition = 30
+            self.__enemy_limit = 7
 
     def __call__(self):
         ObjectController.reset()
@@ -29,9 +47,8 @@ class GameStarter:
         button = Button()
         self.__init_game_objects()
 
+        prev_time = datetime.datetime.now()
         while True :
-            kill = player.kill_point
-
             if button.left : 
                 player.move('L')
             elif button.right :
@@ -46,17 +63,19 @@ class GameStarter:
 
             DISPLAY.image(self.__background())
 
-            if player.hp == 0 :
+            if player.hp <= 0 :
                 print('Game Over!')
                 break
-
-            if player.kill_point == self.__all_enemy_numbers :
-                print('You win')
+            if player.kill_point >= self.__victory_condition :
+                print("You Win")
                 break
+            if datetime.datetime.now() - prev_time >= self.__respawn_cycle :
+                if len(list(ObjectController.getEnemyObjects()[0])) >= self.__enemy_limit :
+                    pass
+                else :
+                    Enemy((random.randint(0, SCREEN_WIDTH), 0), self.__enemy_name)
+                    prev_time = datetime.datetime.now()
 
-            if player.kill_point - kill > 0 :
-                for _ in range(player.kill_point-kill):
-                    Enemy((random.randint(1, SCREEN_WIDTH-1), 1))
-
-
+            
+    
 
