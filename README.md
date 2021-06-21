@@ -76,13 +76,13 @@
       
       <div align='center'>
   
-      |Index|Fighter Plane|HP|Attack Cycle (Sec)|Missile|Damage|
-      |:---:|:---:|:---:|:---:|:---:|:---:|
-      |1|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy1.png" alt="enemy1" width="50" height="50" />|10|3|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile1.png?raw=true" alt="missile1" width="50" height="50" />|11|
-      |2|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy2.png?raw=true" alt="enemy2" width="50" height="50" />|13|3|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile2.png?raw=true" alt="missile2" width="50" height="50" />|13|
-      |3|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy3.png?raw=true" alt="enemy3" width="50" height="50" />|15|2.5|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile3.png?raw=true" alt="missile3" width="50" height="50" />|15|
-      |4|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy4.png?raw=true" alt="enemy4" width="50" height="50" />|17|2|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile4.png?raw=true" alt="missile4" width="50" height="50" />|17|
-      |5|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy5.png?raw=true" alt="enemy5" width="50" height="50" />|20|1.5|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile5.png?raw=true" alt="missile5" width="50" height="50" />|20|
+      |Index|Fighter Plane|HP|Speed(x, y)|Attack Cycle(Sec)|Missile|Damage|
+      |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+      |1|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy1.png" alt="enemy1" width="60" height="60" />|10|(1, 1)|3|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile1.png?raw=true" alt="missile1" width="60" height="60" />|11|
+      |2|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy2.png?raw=true" alt="enemy2" width="60" height="60" />|13|(-2, 2)|3|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile2.png?raw=true" alt="missile2" width="60" height="60" />|13|
+      |3|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy3.png?raw=true" alt="enemy3" width="60" height="60" />|15|(-3, 1)|2.5|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile3.png?raw=true" alt="missile3" width="60" height="60" />|15|
+      |4|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy4.png?raw=true" alt="enemy4" width="60" height="60" />|17|(-4, 1)|2|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile4.png?raw=true" alt="missile4" width="60" height="60" />|17|
+      |5|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy5.png?raw=true" alt="enemy5" width="60" height="60" />|20|(-5, 2)|1.5|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile5.png?raw=true" alt="missile5" width="60" height="60" />|20|
   
       </div>
       
@@ -91,15 +91,40 @@
     - ### Player Object and Player-Missile Object
       _**Player object**_ 는 player가 사용하는 전투기를 의미합니다. _**Player-Missile object**_ 는 player 전투기가 사용하는 missile 객체를 의미하며, _player<sub>i</sub>_ 는 _player-missile<sub>i</sub>_ 를 사용합니다. _Player object_ 는 체력을 의미하는 _hp_ 와 격추한 적군 전투기의 개수를 의미하는 _kill_point_ 를 가지고 있습니다.
 
+      <div align='center'>
+      
+      |Index|Fighter Plane|HP|Speed(x, y)|Missile|Damage|
+      |:---:|:---:|:---:|:---:|:---:|:---:|
+      |1|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/player1.png?raw=true" alt="player1" width="60" height="60"/>|20|(10, 10)|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/player-missile1.png?raw=true" alt="player-missile1" width="60" height="60"/>|15|
+    
+      </div>
+      
     </br>
 
     - ### Effect-Boom object
       _**Effect-Boom object**_ 는 전투기가 공격받고 폭파되는 경우 생성되는 effect 객체입니다.
 
+      <div align='center'>
+      
+      |Index|Effect Boom|
+      |:---:|:---:|
+      |1|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/effect-boom1.png?raw=true" alt="effect-boom1" width="60" height="60"/>|
+    
+      </div>
+
   </br>
 
   - ## Background Object
     _**Background object**_ 는 배경화면을 display하는 객체를 의미하며, 관련 내용은 `src/background.py`에 정의되어 있습니다. 모든 background object와 관련된 정보는 _**BACKGROUND_INFO**_ 에 있습니다. 앞서 설명한 game object의 이미지는 background object가 _call_ 됐을 때, background object가 가진 배경 이미지에 덧붙여집니다.
+
+      <div align='center'>
+      
+      |Index|Background|
+      |:---:|:---:|
+      |1|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/background.png?raw=true" alt="background1" width="120" height="120"/>|
+      |2|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/background2.png?raw=true" alt="background2" width="120" height="120"/>|
+    
+      </div>
 
 </br></br>
 
