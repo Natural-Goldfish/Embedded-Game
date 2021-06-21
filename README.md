@@ -44,9 +44,9 @@
 </br></br>
 
 # Objects
-  게임 객체는 화면에 게임 진행에 필요한 _**game object**_ 와 display되는 부분을 담당하는 _**background object**_ 로 구분됩니다.  
+게임 객체는 화면에 게임 진행에 필요한 _**game object**_ 와 display되는 부분을 담당하는 _**background object**_ 로 구분됩니다.  
 
-  </br>
+</br>
 
   - ## Game Object
     _**Game object**_ 는 게임 진행에 필요한 객체를 의미하며, 관련 내용은 `src/game_objects.py`에 정의되어 있습니다. 게임에 사용되는 모든 객체들에 대한 정보는 _**OBJECT_INFO**_ 에 있으며, 모든 객체들은 _GameObject_ 를 상속합니다. _GameObject_ 는 아래와 같은 속성들을 가지고 있습니다.  
@@ -129,6 +129,18 @@
 </br></br>
 
 # Object Controller
+_**Object controller**_ 는 본 프로젝트에서 정의된 모든 _game objects_ 를 관리하는 역할을 수행합니다. 예를 들어, 게임이 진행되면서 많은 객체들은 생성과 소멸을 반복하게 됩니다. 이러한 과정 속에서 _object controller_ 는 어떤 객체가 공격을 받았는지, 어떤 객체가 소멸되어야 하는지를 판단하고 알맞은 행동을 수행합니다. 
+
+</br>
+
+  - ## ObjectController.enroll()
+    _**enroll method**_ 는 객체가 생성되었음을 관리자에게 알려줍니다. 모든 _game object_ 는 생성됨과 동시에 _object controller_ 의 _enroll method_ 를 호출합니다. 호출된 _enroll method_ 는 객체의 _team과 role_ 을 기준으로, _issueID method_ 를 호출하여 객체마다 고유한 identification을 발급합니다. 즉, _enroll_ 이 호출되면, 객체는 _team과 role_ 에 따라서 다르게 등록됩니다. 이 덕분에 player가 적군 비행기를 격추하거나 혹은 player가 공격 받는 경우를 명확히 파악할 수 있습니다.
+    
+  </br>
+  
+  - ## ObjectController.renew()
+    
+  
 
 </br></br>
 
