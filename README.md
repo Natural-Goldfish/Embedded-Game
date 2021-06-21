@@ -134,14 +134,21 @@ _**Object controller**_ 는 본 프로젝트에서 정의된 모든 _game object
 </br>
 
   - ## ObjectController.enroll()
-    _**enroll method**_ 는 객체가 생성되었음을 관리자에게 알려줍니다. 모든 _game object_ 는 생성됨과 동시에 _object controller_ 의 _enroll method_ 를 호출합니다. 호출된 _enroll method_ 는 객체의 _team과 role_ 을 기준으로, _issueID method_ 를 호출하여 객체마다 고유한 identification을 발급합니다. 즉, _enroll_ 이 호출되면, 객체는 _team과 role_ 에 따라서 다르게 등록됩니다. 이 덕분에 player가 적군 비행기를 격추하거나 혹은 player가 공격 받는 경우를 명확히 파악할 수 있습니다.
+    _**enroll method**_ 는 객체가 생성되었음을 관리자에게 알려줍니다.  
+    
+    모든 _game object_ 는 생성됨과 동시에 _object controller_ 의 _enroll method_ 를 호출합니다. 호출된 _enroll method_ 는 객체의 _team과 role_ 을 기준으로 _issueID method_ 를 호출하여, 객체마다 고유한 identification을 발급합니다. 즉, _enroll_ 이 호출되면, 객체는 _team과 role_ 에 따라서 다르게 등록됩니다. 이 덕분에 player가 적군 비행기를 격추하거나 혹은 player가 공격 받는 경우를 명확히 파악할 수 있습니다.
     
   </br>
   
   - ## ObjectController.renew()
+    _**renew method**_ 는 객체들의 행동 및 상태를 관리합니다.  
     
+    - ### 행동(Behavior)
+      본 프로젝트에서의 행동은 크게 세 가지로 나누어집니다. 첫 번째는 player가 미사일을 발사합니다. Player가 _shoot button_ 을 클릭한 경우, _missile object_ 를 생성합니다. 두 번째는 적군 비행기가 미사일을 발사합니다. _OBJECT_INFO_ 에 정의된 _attack-cycle_ 조건을 만족한다면, _enemy object_ 가 _missile object_ 를 생성합니다. 세 번째는 모든 객체가 이동합니다. 모든 객체가 가지고 있는 고유의 _speed_ 값을 기준으로 객체를 이동시킵니다.
+      
+    - ### 상태(State)
+      상태 또한 크게 세 가지로 나눌 수 있습니다. 객체끼리 충돌한 경우와 충돌하지 않은 경우 그리고 화면 밖으로 객체가 이동한 상태입니다. 객체의 충돌을 판단하는 기준은 _IOU(intersection over union)_ 를 사용하며, 객체 상호간의 _IOU_ 가 0이상인 경우를 충돌한 것으로 판정합니다. 객체가 화면 밖으로 나가는 것을 판단하는 기준은 _object.obj_coord_ 인 객체의 중심 좌표를 기준을 사용하며, _object_ 에 따라 처리 방법이 상이합니다. _Enemy object_ 는 좌측, 우측 그리고 상단에 위치한 상태에서 화면 밖으로 이동할 경우에는 진행 방향을 reverse하여 화면 내부로 다시 진입하지만, 화면의 하단으로 이동한 경우에는 화면 내부로 다시 진입하지 않고 소멸됩니다. _Missile object_ 는 화면 밖으로 이동했을 때, 바로 소멸됩니다.
   
-
 </br></br>
 
 # Game Starter
