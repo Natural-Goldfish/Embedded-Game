@@ -3,6 +3,7 @@ from src.object_controller import ObjectController
 from src.button import Button
 from src.game_objects import Player, Enemy, Missile, BoomEffect
 import random
+import datetime
 
 class GameStarter:
     def __init__(self, level, background):
@@ -11,8 +12,9 @@ class GameStarter:
 
     def __init_game_objects(self):
         if self.__level == 1 :
-            self.__all_enemy_numbers = 10
-            self.__init_enemy_num = 3
+            self.__respone_cycle = datetime.timedelta(0, 3)
+            self.__enemy_name = 'enemy1'
+            self.__victory_condition = 10
 
         elif self.__level == 2 :
             self.__enemy_numbers = 20

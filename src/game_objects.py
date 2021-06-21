@@ -31,7 +31,7 @@ OBJECT_INFO = {
             'height' : 13,
             'size' : (13, 13),
             'path' : os.path.join(IMAGE_PATH, 'missile2.png'),
-            'speed' : (0, 4),
+            'speed' : (0, 6),
             'role' : 'missile',
             'damage' : 13
          
@@ -41,7 +41,7 @@ OBJECT_INFO = {
             'height' : 13,
             'size' : (13, 13),
             'path' : os.path.join(IMAGE_PATH, 'missile3.png'),
-            'speed' : (0, 3),
+            'speed' : (0, 7),
             'role' : 'missile',
             'damage' : 15
          
@@ -51,7 +51,7 @@ OBJECT_INFO = {
             'height' : 13,
             'size' : (13, 13),
             'path' : os.path.join(IMAGE_PATH, 'missile4.png'),
-            'speed' : (0, 2),
+            'speed' : (0, 8),
             'role' : 'missile',
             'damage' : 17
          
@@ -61,7 +61,7 @@ OBJECT_INFO = {
             'height' : 13,
             'size' : (13, 13),
             'path' : os.path.join(IMAGE_PATH, 'missile5.png'),
-            'speed' : (0, 1),
+            'speed' : (0, 10),
             'role' : 'missile',
             'damage' : 20
          
@@ -112,9 +112,9 @@ OBJECT_INFO = {
                 'height' : 49,
                 'size' : (49, 49),
                 'path' : os.path.join(IMAGE_PATH, 'enemy2.png'),
-                'speed' : (-1, 0),
+                'speed' : (-2, 2),
                 'role' : 'fighter-plane',
-                'attack-cycle' : datetime.timedelta(0, 4),
+                'attack-cycle' : datetime.timedelta(0, 3),
                 'missile-name' : 'missile2',
                 'hp' : 13
     },
@@ -123,9 +123,9 @@ OBJECT_INFO = {
                 'height' : 51,
                 'size' : (51, 51),
                 'path' : os.path.join(IMAGE_PATH, 'enemy3.png'),
-                'speed' : (-1, 0),
+                'speed' : (-3, 1),
                 'role' : 'fighter-plane',
-                'attack-cycle' : datetime.timedelta(0, 4),
+                'attack-cycle' : datetime.timedelta(0, 2.5),
                 'missile-name' : 'missile3',
                 'hp' : 15
     },
@@ -134,9 +134,9 @@ OBJECT_INFO = {
                 'height' : 53,
                 'size' : (53, 53),
                 'path' : os.path.join(IMAGE_PATH, 'enemy4.png'),
-                'speed' : (-1, 0),
+                'speed' : (-4, 1),
                 'role' : 'fighter-plane',
-                'attack-cycle' : datetime.timedelta(0, 3),
+                'attack-cycle' : datetime.timedelta(0, 2),
                 'missile-name' : 'missile4',
                 'hp' : 17
     },
@@ -145,9 +145,9 @@ OBJECT_INFO = {
                 'height' : 57,
                 'size' : (57, 57),
                 'path' : os.path.join(IMAGE_PATH, 'enemy5.png'),
-                'speed' : (-1, 0),
+                'speed' : (-5, 2),
                 'role' : 'fighter-plane',
-                'attack-cycle' : datetime.timedelta(0, 5),
+                'attack-cycle' : datetime.timedelta(0, 1.5),
                 'missile-name' : 'missile5',
                 'hp' : 20
     }
@@ -204,8 +204,15 @@ class GameObject:
     def speed(self):
         return self.__speed
 
-    def _reverse_speed(self):
-        self.__speed = (-self.__speed[0], -self.__speed[1])
+    def _reverse_speed(self, x, y):
+        if x and y :
+            self.__speed = (-self.__speed[0], -self.__speed[1])
+        elif x and not y :
+            self.__speed = (-self.__speed[0], self.__speed[1])
+        elif not x and y :
+            self.__speed = (self.__speed[0], -self.__speed[1])
+        else :
+            pass
 
     @property
     def image_coord(self):
@@ -273,10 +280,13 @@ class Enemy(GameObject):
             BoomEffect(self.obj_coord)
 
     def move(self):
-        self._set_obj_coord((self.obj_coord[0]+self.speed[0], self.obj_coord[1]+self.speed[1]))
-        if self.obj_coord[0] <= 0 or self.obj_coord[0] >= SCREEN_WIDTH or self.obj_coord[1] <= 0 :
-            self._reverse_speed()
-            self._set_obj_coord((self.obj_coord[0]+self.speed[0], self.obj_coord[1]+self.speed[1]))
+        super().move()
+        if self.obj_coord[0] <= 0 or self.obj_coord[0] >= SCREEN_WIDTH :
+            self._reverse_speed(True, True)
+            super().move()
+        elif self.obj_coord[1] <= 0 :
+            self._reverse_speed(False, True)
+            super().move()
 
     def shoot(self):
         if datetime.datetime.now()-self.__prev_attack_time >= self.__attack_cycle :

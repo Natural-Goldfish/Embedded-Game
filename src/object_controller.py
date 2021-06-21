@@ -97,9 +97,7 @@ class ObjectController:
                 flag = True
                 for object1_id in object1_ids:
                     object1 = objects1[object1_id]
-
-                    x, y = object1.obj_coord
-                    if x < 0 or x >= SCREEN_WIDTH or y < 0 or y >= SCREEN_HEIGHT :
+                    if object1.obj_coord[0] < 0 or object1.obj_coord[0] > SCREEN_WIDTH or object1.obj_coord[1] < 0 or object1.obj_coord[1] > SCREEN_HEIGHT :
                         flag = False
                         break
                 if flag == False :
@@ -112,13 +110,9 @@ class ObjectController:
                 flag = True
                 for object1_id in object1_ids :
                     object1 = objects1[object1_id]
-                    object1_coord = object1.image_coord
                     for object2_id in object2_ids:
                         object2 = objects2[object2_id]
-                        object2_coord = object2.image_coord
-                        iou = max(0, min(object1_coord[2], object2_coord[2])- max(object1_coord[0], object2_coord[0]))*max(0, min(object1_coord[3], object2_coord[3])-max(object1_coord[1], object2_coord[1]))
-
-                        if iou > 0 : 
+                        if iou(object1.image_coord, object2.image_coord) > 0 : 
                             flag = False
                             break
                     if flag == False :
@@ -127,7 +121,7 @@ class ObjectController:
                             if object1.hp <= 0 : 
                                 object1_ids.remove(object1_id)
                                 del objects1[object1_id]
-                                if object1.team == 'enemy' and object2.team == 'player':
+                                if object1.team == 'enemy' and object2.team == 'player' and cls.__player_id:
                                     player_id = list(cls.__player_id)[0]
                                     cls.__player_object[player_id]._add_kill_point()
 
@@ -184,3 +178,5 @@ class ObjectController:
         cls.__remove_objects(cls.__player_missile_ids, cls.__player_missile_objects, cls.__enemy_missile_ids, cls.__enemy_missile_objects, 'iou')
         cls.__remove_objects(cls.__enemy_ids, cls.__enemy_objects, cls.__player_missile_ids, cls.__player_missile_objects, 'iou')
 
+def iou(box1, box2):
+    return max(0, min(box1[2], box2[2])- max(box1[0], box2[0]))*max(0, min(box1[3], box2[3])-max(box1[1], box2[1]))
