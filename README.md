@@ -44,7 +44,7 @@
 </br></br>
 
 # Objects
-게임 객체는 화면에 게임 진행에 필요한 _**game object**_ 와 display되는 부분을 담당하는 _**background object**_ 로 구분됩니다.  
+본 프로젝트에서 사용되는 객체는 크게 _**game object**_ 와 _**background object**_ 로 구분됩니다.  
 
 </br>
 
