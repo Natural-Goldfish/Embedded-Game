@@ -136,7 +136,7 @@ _**Object controller**_ 는 본 프로젝트에서 정의된 모든 _game object
   - ## ObjectController.enroll()
     _**enroll method**_ 는 객체가 생성되었음을 관리자에게 알려줍니다.  
     
-    모든 _game object_ 는 생성됨과 동시에 _object controller_ 의 _enroll method_ 를 호출합니다. 호출된 _enroll method_ 는 객체의 _team과 role_ 을 기준으로 _issueID method_ 를 호출하여, 객체마다 고유한 identification을 발급합니다. 즉, _enroll_ 이 호출되면, 객체는 _team과 role_ 에 따라서 다르게 등록됩니다. 이 덕분에 player가 적군 비행기를 격추하거나 혹은 player가 공격 받는 경우를 명확히 파악할 수 있습니다.
+    모든 _game object_ 는 생성됨과 동시에 _object controller_ 의 _enroll method_ 를 호출합니다. 호출된 _enroll method_ 는 객체의 _team과 role_ 을 기준으로 _issueID method_ 를 호출하여, 객체마다 고유한 identification을 발급합니다. 즉, _enroll_ 이 호출되면, 객체는 _team과 role_ 에 따라서 다르게 등록됩니다. 이 덕분에 _object controller_ 는 전투기가 격추되는 경우나 공격받는 경우 등, 다양한 상황속에서도 해당 객체를 정확히 구별할 수 있습니다.
     
   </br>
   
