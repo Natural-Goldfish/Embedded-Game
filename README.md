@@ -44,7 +44,7 @@
 </br></br>
 
 # Objects
-본 프로젝트에서 사용되는 객체는 크게 _**game object**_ 와 _**background object**_ 로 구분됩니다.  
+본 프로젝트에서 사용되는 객체는 크게 _**game object**_ 와 _**background object**_  그리고 _**button object**_ 로 구분됩니다.  
 
 </br>
 
@@ -138,6 +138,11 @@
       |2|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/background2.png?raw=true" alt="background2" width="120" height="120"/>|
     
       </div>
+
+  </br>
+  
+  - ## Button Object
+    _**Button object**_ 는 조이스틱에서 들어오는 신호값을 처리하기 위한 객체입니다. 기본적으로 아무 입력이 주어지지 않았을 때, 각 버튼은 _true_ 값을 반환합니다. 이러한 반환 값은 명시적이지 않기 때문에 _button object_ 는 reverse된 값을 반환하는 역할을합니다.
 
 </br></br>
 
