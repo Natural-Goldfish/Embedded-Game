@@ -72,13 +72,13 @@
     </br>
 
     - ### Enemy Object
-      _**Enemy object**_ 는 player가 격추해야 하는 적군 전투기를 의미하며, 모든 _enemy object_ 는 체력을 의미하는 _hp_ 와 공격 주기를 의미하는 _attack_cycle_ 를 attribute로 가지고 있습니다. _Enemy object_ 가 공격을 시도하는 경우, _enemy object_ 가 바라보는 방향으로 _5 pixel_ 떨어진 위치에 _missile object_ 를 생성합니다. _Enemy object<sub>i</sub>_ 는 _name_ attribute 가 _missile<sub>i</sub>_ 인 _missile object_ 를 생성합니다. _Enemy<sub>i</sub>(index=i)_ 에 대한 관련 정보를 요약한 표는 다음과 같습니다:
+      _**Enemy object**_ 는 player가 격추해야 하는 전투기를 의미하며, 모든 _enemy object_ 는 체력을 의미하는 _hp_ 와 공격 주기를 의미하는 _attack_cycle_ 를 attribute로 가지고 있습니다. _Enemy object_ 가 공격을 시도하는 경우, _enemy object_ 가 바라보는 방향으로 _5 pixel_ 떨어진 위치에 _missile object_ 를 생성합니다. _Enemy object<sub>i</sub>_ 는 _name_ attribute 가 _missile<sub>i</sub>_ 인 _missile object_ 를 생성합니다. _Enemy<sub>i</sub>(index=i)_ 에 대한 관련 정보를 요약한 표는 다음과 같습니다:
       
       </br>
       
       <div align='center'>
   
-      |Index|Fighter Plane|HP|Speed(x, y)|Attack Cycle(Sec)|Missile|Damage|
+      |Index|Enemy|HP|Speed(x, y)|Attack Cycle(Sec)|Missile|Damage|
       |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
       |1|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy1.png" alt="enemy1" width="60" height="60" />|10|(1, 1)|3|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile1.png?raw=true" alt="missile1" width="60" height="60" />|11|
       |2|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/enemy2.png?raw=true" alt="enemy2" width="60" height="60" />|13|(-2, 2)|3|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/missile2.png?raw=true" alt="missile2" width="60" height="60" />|13|
@@ -91,13 +91,13 @@
     </br>
       
     - ### Player Object
-      _**Player object**_ 는 player가 사용하는 전투기를 의미합니다. 체력을 의미하는 _hp_ 와 격추한 적군 전투기의 개수를 의미하는 _kill_point_ 를 attribute로 가지고 있습니다. _Player object_ 가 공격을 시도하는 경우, _player object_ 가 바라보는 방향으로 _5 pixel_ 떨어진 위치에 _missile object_ 를 생성합니다. _Player object<sub>i</sub>_ 는 _name_ attribute 가 _player-missile<sub>i</sub>_ 인 _missile object_ 를 생성합니다.  _Player<sub>i</sub>(index=i)_ 에 대한 관련 정보를 요약한 표는 다음과 같습니다:
+      _**Player object**_ 는 player가 사용하는 전투기를 의미합니다. 체력을 의미하는 _hp_ 와 격추한 전투기의 개수를 의미하는 _kill_point_ 를 attribute로 가지고 있습니다. _Player object_ 가 공격을 시도하는 경우, _player object_ 가 바라보는 방향으로 _5 pixel_ 떨어진 위치에 _missile object_ 를 생성합니다. _Player object<sub>i</sub>_ 는 _name_ attribute 가 _player-missile<sub>i</sub>_ 인 _missile object_ 를 생성합니다.  _Player<sub>i</sub>(index=i)_ 에 대한 관련 정보를 요약한 표는 다음과 같습니다:
 
       </br>
       
       <div align='center'>
       
-      |Index|Fighter Plane|HP|Speed(x, y)|Missile|Damage|
+      |Index|Player|HP|Speed(x, y)|Player-Missile|Damage|
       |:---:|:---:|:---:|:---:|:---:|:---:|
       |1|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/player1.png?raw=true" alt="player1" width="60" height="60"/>|20|(10, 10)|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/player-missile1.png?raw=true" alt="player-missile1" width="60" height="60"/>|15|
     
@@ -159,7 +159,7 @@ _**Object controller**_ 는 본 프로젝트에서 정의된 모든 _game object
     </br>
     
     - ### 행동(Behavior)
-      본 프로젝트에서의 행동은 크게 세 가지로 나누어집니다. 첫 번째는 player가 미사일을 발사합니다. Player가 _shoot button_ 을 클릭한 경우, _missile object_ 를 생성합니다. 두 번째는 적군 비행기가 미사일을 발사합니다. _OBJECT_INFO_ 에 정의된 _attack-cycle_ 조건을 만족한다면, _enemy object_ 가 _missile object_ 를 생성합니다. 세 번째는 모든 객체가 이동합니다. 모든 객체가 가지고 있는 고유의 _speed_ 값을 기준으로 객체를 이동시킵니다.
+      본 프로젝트에서의 행동은 크게 세 가지로 나누어집니다. 첫 번째는 player가 미사일을 발사합니다. Player가 _shoot button_ 을 클릭한 경우, _missile object_ 를 생성합니다. 두 번째는 enemy object가 미사일을 발사합니다. _OBJECT_INFO_ 에 정의된 _attack-cycle_ 조건을 만족한다면, _enemy object_ 가 _missile object_ 를 생성합니다. 세 번째는 모든 객체가 이동합니다. 모든 객체가 가지고 있는 고유의 _speed_ 값을 기준으로 객체를 이동시킵니다.
 
     </br>
     
