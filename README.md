@@ -71,8 +71,10 @@
 
     </br>
 
-    - ### Enemy Object and Missile Object
-      _**Enemy object**_ 는 player가 격추해야 하는 적군 전투기를 의미합니다. _**Missile object**_ 는 적군 전투기가 사용하는 missile 객체를 의미하며, _enemy<sub>i</sub>_ 는 _missile<sub>i</sub>_ 를 사용합니다. 모든 enemy 객체는 체력을 의미하는 _hp_ 와 공격 주기를 의미하는 _attack_cycle_ 를 가지고 있습니다.  
+    - ### Enemy Object
+      _**Enemy object**_ 는 player가 격추해야 하는 적군 전투기를 의미하며, 모든 _enemy object_ 는 체력을 의미하는 _hp_ 와 공격 주기를 의미하는 _attack_cycle_ 를 attribute로 가지고 있습니다. _Enemy object_ 가 공격을 시도하는 경우, _enemy object_ 가 바라보는 방향으로 _5 pixel_ 떨어진 위치에 _missile object_ 를 생성합니다. _Enemy object<sub>i</sub>_ 는 _name_ attribute 가 _missile<sub>i</sub>_ 인 _missile object_ 를 생성합니다. _Enemy<sub>i</sub>(index=i)_ 에 대한 관련 정보를 요약한 표는 다음과 같습니다:
+      
+      </br>
       
       <div align='center'>
   
@@ -88,9 +90,11 @@
       
     </br>
       
-    - ### Player Object and Player-Missile Object
-      _**Player object**_ 는 player가 사용하는 전투기를 의미합니다. _**Player-Missile object**_ 는 player 전투기가 사용하는 missile 객체를 의미하며, _player<sub>i</sub>_ 는 _player-missile<sub>i</sub>_ 를 사용합니다. _Player object_ 는 체력을 의미하는 _hp_ 와 격추한 적군 전투기의 개수를 의미하는 _kill_point_ 를 가지고 있습니다.
+    - ### Player Object
+      _**Player object**_ 는 player가 사용하는 전투기를 의미합니다. 체력을 의미하는 _hp_ 와 격추한 적군 전투기의 개수를 의미하는 _kill_point_ 를 attribute로 가지고 있습니다. _Player object_ 가 공격을 시도하는 경우, _player object_ 가 바라보는 방향으로 _5 pixel_ 떨어진 위치에 _missile object_ 를 생성합니다. _Player object<sub>i</sub>_ 는 _name_ attribute 가 _player-missile<sub>i</sub>_ 인 _missile object_ 를 생성합니다.  _Player<sub>i</sub>(index=i)_ 에 대한 관련 정보를 요약한 표는 다음과 같습니다:
 
+      </br>
+      
       <div align='center'>
       
       |Index|Fighter Plane|HP|Speed(x, y)|Missile|Damage|
@@ -98,11 +102,18 @@
       |1|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/player1.png?raw=true" alt="player1" width="60" height="60"/>|20|(10, 10)|<img src="https://github.com/Natural-Goldfish/Shooting-Game/blob/main/images/player-missile1.png?raw=true" alt="player-missile1" width="60" height="60"/>|15|
     
       </div>
-      
+
     </br>
 
-    - ### Effect-Boom object
-      _**Effect-Boom object**_ 는 전투기가 공격받고 폭파되는 경우 생성되는 effect 객체입니다.
+    - ### Missile Object
+      _**Missile object**_ 는 _player object_ 혹은 _enemy object_ 가 사용하는 공격 수단을 의미하며, 모든 _missile object_ 는 공격력을 의미하는 _damage_ 를 attribute로 가지고 있습니다. 모든 _missile object_ 는 고유한 _name_ 을 가지고 있으며, _name_ 의 접두사 및 접미사를 기준으로 어떤 _player object_ 혹은 _enemy object_ 가 사용하는 _missile object_ 인지 구분할 수 있습니다.
+
+    </br>
+
+    - ### Effect-Boom Object
+      _**Effect-Boom object**_ 는 전투기가 공격받고 폭파되는 경우 생성되는 effect 객체입니다. _Effect-Boom<sub>i</sub>(index=i)_ 에 대한 관련 정보를 요약한 표는 다음과 같습니다:
+
+      </br>
 
       <div align='center'>
       
@@ -115,7 +126,9 @@
   </br>
 
   - ## Background Object
-    _**Background object**_ 는 배경화면을 display하는 객체를 의미하며, 관련 내용은 `src/background.py`에 정의되어 있습니다. 모든 background object와 관련된 정보는 _**BACKGROUND_INFO**_ 에 있습니다. 앞서 설명한 game object의 이미지는 background object가 _call_ 됐을 때, background object가 가진 배경 이미지에 덧붙여집니다.
+    _**Background object**_ 는 배경화면을 display하는 객체를 의미하며, 관련 내용은 `src/background.py`에 정의되어 있습니다. 모든 background object와 관련된 정보는 _**BACKGROUND_INFO**_ 에 있습니다. 앞서 설명한 game object의 이미지는 background object가 _call_ 됐을 때, background object가 가진 배경 이미지에 덧붙여집니다. _Background<sub>i</sub>(index=i)_ 에 대한 관련 정보를 요약한 표는 다음과 같습니다:
+
+      </br>
 
       <div align='center'>
       
